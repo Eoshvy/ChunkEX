@@ -30,15 +30,12 @@ jobs:
 
     - name: Package .levipack
       run: |
-        mkdir -p output
-        cp build/libchunkex.so output/
-        cp manifest.json output/
-        cd output
-        zip -r ../ChunkEX.levipack *
+        # Create levipack zip containing files directly at root
+        zip -j ChunkEX.levipack manifest.json build/libchunkex.so
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: ChunkEX-levipack
+        name: ChunkEX.levipack
         path: ChunkEX.levipack
         
