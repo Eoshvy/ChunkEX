@@ -1,7 +1,5 @@
 #include <preloader/mod.h>
-#include <preloader/log.h>
 #include <android/log.h>
-#include <cmath>
 
 #define LOG_TAG "ChunkEX"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
@@ -15,28 +13,25 @@ public:
 
     ChunkEXMod() : mSelf(*ll::mod::NativeMod::current()) {}
 
-    ll::mod::NativeMod& getSelf() const { return mSelf; }
+    [[nodiscard]] ll::mod::NativeMod& getSelf() const { return mSelf; }
 
     bool load() {
-        LOGI("[ChunkEX] Lifecycle Phase: LOAD");
+        LOGI("[ChunkEX] Lifecycle: LOAD");
         return true;
     }
 
     bool enable() {
-        LOGI("[ChunkEX] Lifecycle Phase: ENABLE");
-        LOGI("======================================");
-        LOGI(" ChunkEX Mod Enabled & Hooks Active   ");
-        LOGI("======================================");
+        LOGI("[ChunkEX] Lifecycle: ENABLE - ChunkEX Ready");
         return true;
     }
 
     bool disable() {
-        LOGI("[ChunkEX] Lifecycle Phase: DISABLE");
+        LOGI("[ChunkEX] Lifecycle: DISABLE");
         return true;
     }
 
     bool unload() {
-        LOGI("[ChunkEX] Lifecycle Phase: UNLOAD");
+        LOGI("[ChunkEX] Lifecycle: UNLOAD");
         return true;
     }
 
@@ -44,5 +39,5 @@ private:
     ll::mod::NativeMod& mSelf;
 };
 
-// Register mod instance with LeviLauncher preloader
+// Register mod instance with LeviLauncher
 PL_REGISTER_MOD(ChunkEXMod, ChunkEXMod::instance())
