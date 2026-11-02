@@ -1,0 +1,44 @@
+name: Build ChunkEX .levipack
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Android NDK
+      uses: android-actions/setup-ndk@v3
+      with:
+        ndk-version: r26b
+        cmake-version: 3.22.1
+
+    - name: Build with CMake
+      run: |
+        mkdir build && cd build
+        cmake .. \
+          -DCMAKE_TOOLCHAIN_FILE="$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake" \
+          -DANDROID_ABI=arm64-v8a \
+          -DANDROID_PLATFORM=android-24 \
+          -DCMAKE_SYSTEM_NAME=Android
+        cmake --build . --config Release
+
+    - name: Package .levipack
+      run: |
+        mkdir -p output
+        cp build/libchunkex.so output/
+        cp manifest.json output/
+        cd output
+        zip -r ../ChunkEX.levipack *
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ChunkEX-levipack
+        path: ChunkEX.levipack
+        
