@@ -1,46 +1,48 @@
-#include <jni.h>
+#include <preloader/mod.h>
+#include <preloader/log.h>
 #include <android/log.h>
 #include <cmath>
 
 #define LOG_TAG "ChunkEX"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
-// Structure to track local player chunk positions
-struct ChunkPos {
-    int x;
-    int z;
+class ChunkEXMod {
+public:
+    static ChunkEXMod& instance() {
+        static ChunkEXMod inst;
+        return inst;
+    }
+
+    ChunkEXMod() : mSelf(*ll::mod::NativeMod::current()) {}
+
+    ll::mod::NativeMod& getSelf() const { return mSelf; }
+
+    bool load() {
+        LOGI("[ChunkEX] Lifecycle Phase: LOAD");
+        return true;
+    }
+
+    bool enable() {
+        LOGI("[ChunkEX] Lifecycle Phase: ENABLE");
+        LOGI("======================================");
+        LOGI(" ChunkEX Mod Enabled & Hooks Active   ");
+        LOGI("======================================");
+        return true;
+    }
+
+    bool disable() {
+        LOGI("[ChunkEX] Lifecycle Phase: DISABLE");
+        return true;
+    }
+
+    bool unload() {
+        LOGI("[ChunkEX] Lifecycle Phase: UNLOAD");
+        return true;
+    }
+
+private:
+    ll::mod::NativeMod& mSelf;
 };
 
-// Helper function to calculate current chunk from player block coordinates
-ChunkPos getChunkFromPos(double playerX, double playerZ) {
-    ChunkPos pos;
-    pos.x = static_cast<int>(std::floor(playerX / 16.0));
-    pos.z = static_cast<int>(std::floor(playerZ / 16.0));
-    return pos;
-}
-
-// Function to log chunk boundary bounds for rendering overlay
-void logChunkBorders(double x, double z) {
-    ChunkPos currentChunk = getChunkFromPos(x, z);
-    
-    int minBlockX = currentChunk.x * 16;
-    int maxBlockX = minBlockX + 15;
-    int minBlockZ = currentChunk.z * 16;
-    int maxBlockZ = minBlockZ + 15;
-
-    LOGI("[ChunkEX] Player in Chunk [%d, %d] | X: %d to %d | Z: %d to %d",
-         currentChunk.x, currentChunk.z, minBlockX, maxBlockX, minBlockZ, maxBlockZ);
-}
-
-// Native Mod Entry point for LeviLauncher
-extern "C" JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
-    LOGI("======================================");
-    LOGI(" ChunkEX Mod Initialized Successfully ");
-    LOGI(" Chunk Border Renderer Engine Ready   ");
-    LOGI("======================================");
-    
-    // Example test call to verify calculation logic
-    logChunkBorders(100.5, -250.3);
-    
-    return JNI_VERSION_1_6;
-}
+// Register mod instance with LeviLauncher preloader
+PL_REGISTER_MOD(ChunkEXMod, ChunkEXMod::instance())
