@@ -1,16 +1,16 @@
 cmake_minimum_required(VERSION 3.14)
 project(ChunkEX)
 
-# LeviLauncher preloader SDK requires C++20
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Fetch preloader-android SDK
+# Fetch preloader-android SDK with submodules enabled recursively
 include(FetchContent)
 FetchContent_Declare(
     preloader_android
     GIT_REPOSITORY https://github.com/LiteLDev/preloader-android.git
     GIT_TAG        0.2.2
+    GIT_SUBMODULES_RECURSE TRUE
 )
 FetchContent_MakeAvailable(preloader_android)
 
