@@ -1,16 +1,7 @@
 {
-  "format_version": 2,
-  "header": {
-    "name": "ChunkEX",
-    "description": "Displays Minecraft Bedrock chunk borders natively.",
-    "uuid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-    "version": [1, 0, 0],
-    "min_engine_version": [1, 21, 0]
-  },
-  "modules": [
-    {
-      "type": "native",
-      "file": "libchunkex.so"
-    }
-  ]
+  "type": "preload-native",
+  "name": "ChunkEX",
+  "author": "Eoshvy",
+  "version": "1.0.0",
+  "entry": "libchunkex.so"
 }
