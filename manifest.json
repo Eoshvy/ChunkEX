@@ -3,5 +3,8 @@
   "name": "ChunkEX",
   "author": "Eoshvy",
   "version": "1.0.0",
-  "entry": "libchunkex.so"
+  "entry": "libchunkex.so",
+  "minecraft_versions": [],
+  "overwrite_files": [],
+  "overwrite_folders": []
 }
