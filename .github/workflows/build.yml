@@ -30,7 +30,6 @@ jobs:
 
     - name: Package .levipack
       run: |
-        # Create levipack zip containing files directly at root
         zip -j ChunkEX.levipack manifest.json build/libchunkex.so
 
     - name: Upload Artifact
