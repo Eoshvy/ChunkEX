@@ -9,11 +9,12 @@ FetchContent_Declare(
     preloader_android
     GIT_REPOSITORY https://github.com/LiteLDev/preloader-android.git
     GIT_TAG        0.2.2
-    GIT_SUBMODULES_RECURSE TRUE
 )
 FetchContent_MakeAvailable(preloader_android)
 
 add_library(chunkex SHARED src/main.cpp)
 set_target_properties(chunkex PROPERTIES SUFFIX ".so")
 
+# Link the preloader library and explicitly add its include directory
 target_link_libraries(chunkex PRIVATE preloader)
+target_include_directories(chunkex PRIVATE ${preloader_android_SOURCE_DIR}/include)
