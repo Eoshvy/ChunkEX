@@ -16,3 +16,4 @@ add_library(chunkex SHARED src/main.cpp)
 set_target_properties(chunkex PROPERTIES SUFFIX ".so")
 
 target_link_libraries(chunkex PRIVATE preloader)
+target_include_directories(chunkex PRIVATE "${preloader_android_SOURCE_DIR}/include")
