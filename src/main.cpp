@@ -1,4 +1,4 @@
-#include <pl/mod.h>
+#include <pl/mod.hpp>
 
 class ChunkEXMod {
 public:
